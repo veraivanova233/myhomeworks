@@ -1,3 +1,4 @@
+# вариант 2
 def file():
     f = open('austen.txt', 'r', encoding = 'utf-8')
     s = f.read()
