@@ -1,3 +1,4 @@
+# 2 вариант
 import re
 f = open('examples.txt', 'r', encoding = 'utf-8')
 f = f.readlines()
