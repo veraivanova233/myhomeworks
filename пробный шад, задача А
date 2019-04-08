@@ -1,0 +1,36 @@
+n = int(input())
+s = list(map(int, input().split(' ')))
+s.sort()
+m = 1
+mx = 1
+max_val = []
+if len(s) == 1:
+    max_val.append(s[0])
+elif len(s) == 2 and s[0] != s[1]:
+    max_val.append(s[0])
+    max_val.append(s[1])
+else:
+    for i in range(len(s) - 1):
+        if i == len(s) - 2 and s[i] != s[i + 1] and mx == 1:
+            max_val.append(s[i+1])
+        if i == len(s) - 2 and s[i] == s[i-1]:
+            if m + 1 > mx:
+                mx = m + 1
+                max_val = [s[i]]
+            elif m + 1 == mx:
+                max_val.append(s[i])
+        if s[i] == s[i + 1]:
+            if m+1 >= mx and i == len(s) - 2:
+                max_val.append(s[i])
+            m += 1
+        else:
+            if m > mx:
+                mx = m
+                max_val = [s[i]]
+            elif m == mx:
+                max_val.append(s[i])
+            m = 1
+if len(max_val) > 0:
+    print(max(max_val))
+else:
+    print(s[0])
