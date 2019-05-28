@@ -1,0 +1,85 @@
+class Drinks:
+    def __init__(self):
+        self.__drinks = []
+        self._data = "Параметром метода lowest_level может быть ккал/белки/жиры/угл. По умолчанию подсчитывается минимальная калорийность"
+
+    def __add__(self, item):
+        self.__drinks.append(item)
+
+    def __str__(self):
+        r = ""
+        for i in self.__drinks:
+            r += i
+            r += "\n"
+        return r
+
+    def __iter__(self, first):
+        if -1 < first < len(self.__drinks):
+            self.cur = first
+        else:
+            print("Выход за край массива")
+        return self
+
+    def __next__(self, last):
+        if -1 < last < len(self.__drinks):
+            if self.cur > last:
+                print("Выход за край массива")
+            else:
+                self.cur += 1
+                return self.__drinks[self.cur - 1]
+        print("Выход за край массива")
+
+    def print_table(self, file):
+        coffee = []
+        components = []
+        for i in range(1, len(self.__drinks)):
+            # self.__drinks[i] = self.__drinks[i].split()
+            coffee.append(self.__drinks[i].split()[0])
+            components.append(self.__drinks[i].split()[1].split(','))
+        for i in range(len(coffee)):
+            file.write('{0}          {1}     {2}     {3}'.
+                       format(coffee[i], components[i][0], components[i][1], components[i][2]))
+            file.write('\n')
+
+    @property
+    def data(self):
+        return self._data
+
+    def lowest_level(self, comp="ккал"):  # вычисляет напиток с минимальным содержанием какого-либо компонента
+        target = 0
+        if comp == "ккал":
+            target = 0
+        elif comp == "белки":
+            target = 1
+        elif comp == "жиры":
+            target = 2
+        elif comp == "угл":
+            target = 3
+        ans = int(self.__drinks[1].split()[1].split(',')[target])
+        res = ""
+        for ind in range(1, len(self.__drinks)):
+            if int(self.__drinks[ind].split()[1].split(',')[target]) <= ans:
+                ans = int(self.__drinks[ind].split()[1].split(',')[target])
+                if res == "":
+                    res += self.__drinks[ind].split()[0]
+                else:
+                    res += (", " + self.__drinks[ind].split()[0])
+        return res + ": " + str(ans) + " " + comp
+
+
+old = open(/.../состав_продуктов.txt',
+           'r', encoding='utf-8')
+new = open('/.../new coffee list.txt',
+           'w', encoding='utf-8')
+lines = old.readlines()
+myDrinks = Drinks()
+for i in lines:
+    myDrinks.__add__(i)
+print(str(myDrinks))
+myDrinks.print_table(new)
+print(myDrinks.data)
+print(myDrinks.lowest_level("ккал"))
+myDrinks.__iter__(1)
+print(myDrinks.__next__(5))
+old.close()
+new.close()
